@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Mr. Ben — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#030712;--bg2:#0a0f1e;--bg3:#0f172a;--panel:#111827;
+  --border:#1e2d45;--border2:#243553;
+  --cyan:#00e5ff;--cyan2:#00b4cc;--lime:#a3e635;--amber:#f59e0b;
+  --white:#f0f6ff;--muted:#6b7a99;--dim:#3d4f6e;
+  --display:'Syne',sans-serif;--mono:'Space Mono',monospace;--body:'DM Sans',sans-serif;
+  --glow:0 0 24px rgba(0,229,255,0.18),0 0 60px rgba(0,229,255,0.06);
+  --glow2:0 0 32px rgba(0,229,255,0.35),0 0 80px rgba(0,229,255,0.12);
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--body);background:var(--bg);color:var(--white);overflow-x:hidden;cursor:none}
+#cursor{position:fixed;width:10px;height:10px;background:var(--cyan);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s;box-shadow:var(--glow2)}
+#cring{position:fixed;width:32px;height:32px;border:1px solid rgba(0,229,255,.4);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .2s,height .2s}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,229,255,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,.022) 1px,transparent 1px);background-size:48px 48px;pointer-events:none;z-index:0}
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:1.1rem 3.5rem;background:rgba(3,7,18,.88);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-logo{font-family:var(--display);font-size:1.1rem;font-weight:800;color:var(--white);text-decoration:none;display:flex;align-items:center;gap:.6rem}
+.nav-logo span{color:var(--cyan);font-family:var(--mono);font-size:.8rem;border:1px solid var(--cyan);padding:.15rem .5rem;letter-spacing:.1em}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s;position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-3px;left:0;right:0;height:1px;background:var(--cyan);transform:scaleX(0);transform-origin:left;transition:transform .25s}
+.nav-links a:hover{color:var(--cyan)} .nav-links a:hover::after{transform:scaleX(1)}
+.nav-status{display:flex;align-items:center;gap:.5rem;font-family:var(--mono);font-size:.62rem;color:var(--lime);letter-spacing:.1em}
+.sdot{width:6px;height:6px;border-radius:50%;background:var(--lime);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(163,230,53,.5)}50%{box-shadow:0 0 0 6px rgba(163,230,53,0)}}
+/* HERO */
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 460px;align-items:center;padding:6rem 3.5rem 3rem;position:relative;gap:3rem;z-index:1}
+.hbg{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.hbg-c{position:absolute;border-radius:50%;filter:blur(90px);opacity:.1}
+.hbg-c:nth-child(1){width:600px;height:600px;background:var(--cyan);top:-200px;right:80px}
+.hbg-c:nth-child(2){width:380px;height:380px;background:#6366f1;bottom:-80px;left:180px}
+.hero-content{position:relative;z-index:1}
+.htag{font-family:var(--mono);font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--cyan);margin-bottom:1.5rem;display:flex;align-items:center;gap:.75rem}
+.htag::before{content:'';width:32px;height:1px;background:var(--cyan)}
+.hname{font-family:var(--display);font-size:clamp(3.5rem,7vw,6.5rem);font-weight:800;line-height:.95;letter-spacing:-.02em;margin-bottom:1rem}
+.hname .outline{-webkit-text-stroke:1.5px var(--cyan);color:transparent;display:block}
+.htitles{display:flex;flex-wrap:wrap;gap:.45rem;margin-bottom:2rem}
+.hbadge{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;padding:.3rem .85rem;border:1px solid var(--border2);color:var(--muted);background:rgba(255,255,255,.02);transition:border-color .2s,color .2s}
+.hbadge:hover{border-color:var(--cyan);color:var(--cyan)}
+.hdesc{font-size:1rem;color:var(--muted);max-width:500px;line-height:1.9;margin-bottom:2.5rem}
+.hdesc strong{color:var(--white);font-weight:500}
+.hbtns{display:flex;gap:1rem;flex-wrap:wrap}
+.btn-p{display:inline-flex;align-items:center;gap:.6rem;padding:.9rem 2rem;background:var(--cyan);color:var(--bg);font-family:var(--mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;font-weight:700;transition:all .25s;clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,0 100%)}
+.btn-p:hover{background:var(--white);box-shadow:var(--glow2);transform:translateY(-2px)}
+.btn-s{display:inline-flex;align-items:center;gap:.6rem;padding:.9rem 2rem;border:1px solid var(--border2);color:var(--white);font-family:var(--mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;transition:all .25s}
+.btn-s:hover{border-color:var(--cyan);color:var(--cyan);background:rgba(0,229,255,.04)}
+/* PROFILE CARD */
+.pcard{position:relative;z-index:1;background:var(--panel);border:1px solid var(--border);padding:2rem;animation:fadeUp .6s .3s both}
+.pcard::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--cyan),transparent)}
+.card-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid var(--border)}
+.clabel{font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.cid{font-family:var(--mono);font-size:.6rem;color:var(--cyan)}
+.monogram{width:76px;height:76px;background:linear-gradient(135deg,var(--bg3),var(--panel));border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:1.8rem;font-weight:800;color:var(--cyan);margin-bottom:1rem;box-shadow:var(--glow)}
+.cname{font-family:var(--display);font-size:1.25rem;font-weight:700;margin-bottom:.2rem}
+.crole{font-family:var(--mono);font-size:.62rem;color:var(--cyan);letter-spacing:.1em;margin-bottom:1.4rem}
+.cinfo{display:flex;flex-direction:column;gap:.6rem;margin-bottom:1.4rem}
+.irow{display:flex;align-items:flex-start;gap:.75rem;font-size:.78rem}
+.irow .ico{color:var(--cyan);min-width:14px;font-size:.72rem;margin-top:2px}
+.irow span{color:var(--muted);line-height:1.45} .irow strong{color:var(--white);font-weight:400}
+.cdiv{height:1px;background:var(--border);margin:1rem 0}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:.4rem}
+.mstat{background:var(--bg3);border:1px solid var(--border);padding:.7rem .4rem;text-align:center}
+.mnum{font-family:var(--display);font-size:1.3rem;font-weight:700;color:var(--cyan);line-height:1}
+.mlbl{font-family:var(--mono);font-size:.52rem;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin-top:.25rem}
+/* SECTION */
+section{padding:6rem 3.5rem;position:relative;z-index:1}
+.sh{display:flex;align-items:center;gap:1.5rem;margin-bottom:4rem}
+.snum{font-family:var(--mono);font-size:.68rem;color:var(--cyan);letter-spacing:.1em}
+.stitle{font-family:var(--display);font-size:2.1rem;font-weight:700}
+.sline{flex:1;height:1px;background:linear-gradient(90deg,var(--border2),transparent)}
+.ssub{font-family:var(--mono);font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-left:auto}
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:4rem;align-items:start}
+.at p{font-size:.98rem;color:var(--muted);margin-bottom:1.15rem;line-height:1.9} .at strong{color:var(--white);font-weight:500}
+.terminal{background:var(--bg3);border:1px solid var(--border);margin-top:1.5rem;overflow:hidden}
+.tbar{display:flex;align-items:center;gap:.45rem;padding:.6rem 1rem;background:var(--panel);border-bottom:1px solid var(--border)}
+.td{width:10px;height:10px;border-radius:50%}
+.td:nth-child(1){background:#ff5f57} .td:nth-child(2){background:#febc2e} .td:nth-child(3){background:#28c840}
+.ttitle{font-family:var(--mono);font-size:.6rem;color:var(--dim);margin-left:.4rem;letter-spacing:.1em}
+.tbody{padding:1.2rem 1.2rem 1.5rem;font-family:var(--mono);font-size:.7rem;line-height:2.1}
+.tc{color:var(--dim)} .tk{color:var(--cyan)} .tv{color:var(--lime)} .ts{color:var(--amber)}
+.skills-list{display:flex;flex-direction:column;gap:.8rem}
+.skrow{background:var(--panel);border:1px solid var(--border);padding:.85rem 1rem}
+.sktop{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem}
+.skn{font-family:var(--mono);font-size:.7rem;color:var(--white)} .skp{font-family:var(--mono);font-size:.62rem;color:var(--cyan)}
+.sktrack{height:2px;background:var(--border);position:relative}
+.skfill{position:absolute;top:0;left:0;height:100%;background:linear-gradient(90deg,var(--cyan),var(--cyan2));width:var(--w)}
+/* EXPERTISE */
+.xgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border)}
+.xcard{background:var(--bg);padding:2rem 1.7rem;border-top:2px solid transparent;transition:border-color .25s,background .25s;position:relative;overflow:hidden}
+.xcard::after{content:'';position:absolute;bottom:0;left:0;right:0;height:0;background:linear-gradient(0deg,rgba(0,229,255,.04),transparent);transition:height .3s}
+.xcard:hover{border-top-color:var(--cyan);background:var(--bg2)} .xcard:hover::after{height:100%}
+.xicon{font-size:1.5rem;margin-bottom:.9rem;display:block}
+.xtitle{font-family:var(--display);font-size:1rem;font-weight:600;margin-bottom:.55rem}
+.xdesc{font-size:.78rem;color:var(--muted);line-height:1.75}
+.xtags{display:flex;flex-wrap:wrap;gap:.3rem;margin-top:.9rem}
+.xtag{font-family:var(--mono);font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;padding:.2rem .5rem;border:1px solid var(--border2);color:var(--dim)}
+/* PROJECTS */
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
+.pcard{background:var(--panel);border:1px solid var(--border);padding:1.7rem;position:relative;overflow:hidden;transition:border-color .25s,transform .25s}
+.pcard::before{content:'';position:absolute;top:0;left:0;width:3px;height:0;background:var(--cyan);transition:height .3s}
+.pcard:hover{border-color:var(--border2);transform:translateY(-4px)} .pcard:hover::before{height:100%}
+.pyr{font-family:var(--mono);font-size:.6rem;color:var(--cyan);letter-spacing:.1em;margin-bottom:.7rem}
+.ptitle{font-family:var(--display);font-size:1.05rem;font-weight:600;margin-bottom:.6rem;line-height:1.3}
+.pdesc{font-size:.78rem;color:var(--muted);line-height:1.75;margin-bottom:1.1rem}
+.ptags{display:flex;flex-wrap:wrap;gap:.3rem}
+.ptag{font-family:var(--mono);font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;padding:.2rem .5rem;border:1px solid var(--border);color:var(--dim);background:var(--bg3)}
+/* TIMELINE */
+.tl{position:relative;padding-left:2rem}
+.tl::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:linear-gradient(var(--cyan),transparent)}
+.tli{position:relative;padding-bottom:2.5rem;padding-left:2rem}
+.tli::before{content:'';position:absolute;left:-2rem;top:.35rem;width:10px;height:10px;border-radius:50%;background:var(--bg);border:2px solid var(--cyan);box-shadow:0 0 12px rgba(0,229,255,.5)}
+.tlp{font-family:var(--mono);font-size:.6rem;color:var(--cyan);letter-spacing:.12em;margin-bottom:.35rem}
+.tlr{font-family:var(--display);font-size:1.25rem;font-weight:600;margin-bottom:.2rem}
+.tlo{font-family:var(--mono);font-size:.68rem;color:var(--muted);margin-bottom:.75rem}
+.tld{font-size:.83rem;color:var(--muted);line-height:1.82;max-width:620px}
+/* CONTACT */
+.clayout{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start}
+.cleft h3{font-family:var(--display);font-size:2.6rem;font-weight:700;line-height:1.15;margin-bottom:1.4rem} .cleft h3 em{color:var(--cyan);font-style:normal}
+.cleft p{font-size:.92rem;color:var(--muted);line-height:1.85;margin-bottom:2rem}
+.cright{display:flex;flex-direction:column;gap:1rem}
+.cc{background:var(--panel);border:1px solid var(--border);padding:1.2rem 1.4rem;display:flex;align-items:flex-start;gap:1.1rem;transition:border-color .25s,background .25s;text-decoration:none}
+.cc:hover{border-color:var(--cyan);background:rgba(0,229,255,.03)}
+.cico{width:38px;height:38px;border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0;color:var(--cyan);background:var(--bg3)}
+.cclbl{font-family:var(--mono);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.2rem}
+.ccval{font-size:.85rem;color:var(--white)}
+.srow{display:flex;gap:.85rem;flex-wrap:wrap}
+.sbtn{display:inline-flex;align-items:center;gap:.45rem;padding:.7rem 1.4rem;border:1px solid var(--border2);color:var(--muted);font-family:var(--mono);font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;transition:all .2s}
+.sbtn:hover{border-color:var(--cyan);color:var(--cyan);background:rgba(0,229,255,.04)}
+/* FOOTER */
+footer{padding:1.5rem 3.5rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;position:relative;z-index:1}
+.fl{font-family:var(--mono);font-size:.62rem;color:var(--dim);letter-spacing:.1em}
+.fr{font-family:var(--mono);font-size:.62rem;color:var(--dim);display:flex;gap:2rem;letter-spacing:.1em} .fr span{color:var(--muted)}
+/* SCANLINE */
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:1000;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.012) 2px,rgba(0,0,0,.012) 4px)}
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.htag{animation:fadeUp .5s ease both} .hname{animation:fadeUp .5s .1s ease both}
+.htitles{animation:fadeUp .5s .2s ease both} .hdesc{animation:fadeUp .5s .3s ease both}
+.hbtns{animation:fadeUp .5s .4s ease both}
+/* RESPONSIVE */
+@media(max-width:1100px){
+  nav{padding:1rem 1.5rem} .nav-status{display:none}
+  .hero{grid-template-columns:1fr;padding:5.5rem 1.5rem 2.5rem;gap:2rem}
+  .pcard{max-width:460px}
+  section{padding:4rem 1.5rem}
+  .about-grid{grid-template-columns:1fr;gap:2.5rem}
+  .xgrid{grid-template-columns:1fr 1fr}
+  .pgrid{grid-template-columns:1fr 1fr}
+  .clayout{grid-template-columns:1fr;gap:2rem}
+  footer{flex-direction:column;gap:.6rem;text-align:center} .fr{justify-content:center}
+}
+@media(max-width:600px){.xgrid,.pgrid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div id="cursor"></div>
+<div id="cring"></div>
+
+<!-- ── NAV ── -->
+<nav>
+  <a class="nav-logo" href="#">Mr. Ben <span>v2.0</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#expertise">Expertise</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-status"><div class="sdot"></div>Available for Opportunities</div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero" style="padding-top:6rem;padding-bottom:3rem">
+  <div class="hbg"><div class="hbg-c"></div><div class="hbg-c"></div></div>
+  <div class="hero-content">
+    <div class="htag">// University of Dodoma · Tanzania</div>
+    <h1 class="hname">Mr.<br/><span class="outline">Benedict</span></h1>
+    <div class="htitles">
+      <span class="hbadge">IT Professional</span>
+      <span class="hbadge">Economist</span>
+      <span class="hbadge">Project Planner</span>
+      <span class="hbadge">University Student</span>
+      <span class="hbadge">Systems Analyst</span>
+      <span class="hbadge">Tech Consultant</span>
+    </div>
+    <p class="hdesc">A <strong>multi-disciplinary professional</strong> from Kahama, Tanzania — merging <strong>information technology</strong>, <strong>economic analysis</strong>, and <strong>strategic project planning</strong> to create impactful solutions at the intersection of tech and business.</p>
+    <div class="hbtns">
+      <a class="btn-p" href="#projects">▶ View Projects</a>
+      <a class="btn-s" href="#contact">✉ Get In Touch</a>
+    </div>
+  </div>
+
+  <!-- PROFILE CARD -->
+  <div class="pcard">
+    <div class="card-hdr">
+      <span class="clabel">// Profile Card</span>
+      <span class="cid">ID·BEN·2026</span>
+    </div>
+    <div class="monogram">MB</div>
+    <div class="cname">Mr. Ben (Benedicto)</div>
+    <div class="crole">[ IT · Economics · Project Management ]</div>
+    <div class="cinfo">
+      <div class="irow"><span class="ico">✉</span><span><strong>benedictormwesigwa@gmail.com</strong></span></div>
+      <div class="irow"><span class="ico">📞</span><span><strong>+255 760 965 778</strong></span></div>
+      <div class="irow"><span class="ico">📍</span><span><strong>Kahama Municipal Council</strong>, Shinyanga Region, Tanzania</span></div>
+      <div class="irow"><span class="ico">🎓</span><span>University of Dodoma — <strong>Current Student</strong></span></div>
+    </div>
+    <div class="cdiv"></div>
+    <div class="stats">
+      <div class="mstat"><div class="mnum">9</div><div class="mlbl">Fields</div></div>
+      <div class="mstat"><div class="mnum">10+</div><div class="mlbl">Projects</div></div>
+      <div class="mstat"><div class="mnum">TZ</div><div class="mlbl">Origin</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── ABOUT ── -->
+<section id="about" style="background:var(--bg2)">
+  <div class="sh">
+    <span class="snum">01 //</span>
+    <h2 class="stitle">About Me</h2>
+    <span class="sline"></span>
+    <span class="ssub">Profile</span>
+  </div>
+  <div class="about-grid">
+    <div class="at">
+      <p>I'm <strong>Mr. Ben (Benedicto)</strong> — an IT professional, economist, project planner, and current student at the <strong>University of Dodoma (UDOM)</strong>. Based in <strong>Kahama Municipal Council, Shinyanga Region, Tanzania</strong>, I am driven by the belief that technology and sound economic thinking can transform communities and organisations.</p>
+      <p>My IT expertise spans <strong>hardware & software support, networking fundamentals, system administration, and cybersecurity basics</strong>. I apply these skills practically — setting up local area networks, troubleshooting systems, and helping organisations digitise their operations efficiently and securely.</p>
+      <p>As an economist, I analyse markets, interpret socioeconomic data, and produce financial models that enable evidence-based decisions. As a project planner, I translate ambitious ideas into <strong>structured, deliverable roadmaps</strong> — complete with scope documents, timelines, budgets, and risk registers.</p>
+      <p>Currently pursuing my degree at UDOM, I am actively engaged in academic research and community development initiatives that bridge technology with economic progress across East Africa.</p>
+      <div class="terminal">
+        <div class="tbar"><div class="td"></div><div class="td"></div><div class="td"></div><span class="ttitle">ben@udom:~$ whoami --full</span></div>
+        <div class="tbody">
+          <div><span class="tc">// Loading profile: Mr. Ben...</span></div>
+          <div><span class="tk">name</span>     : <span class="ts">"Benedicto Mwesigwa"</span></div>
+          <div><span class="tk">email</span>    : <span class="ts">"benedictormwesigwa@gmail.com"</span></div>
+          <div><span class="tk">phone</span>    : <span class="ts">"+255 760 965 778"</span></div>
+          <div><span class="tk">location</span> : <span class="ts">"Kahama, Shinyanga, TZ"</span></div>
+          <div><span class="tk">uni</span>      : <span class="ts">"University of Dodoma"</span></div>
+          <div><span class="tk">roles</span>    : <span class="tv">["IT Pro","Economist","Planner"]</span></div>
+          <div><span class="tk">status</span>   : <span style="color:var(--lime)">"actively_learning &amp; building"</span></div>
+          <div><span style="color:var(--cyan)">█</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="skills-list">
+      <div style="font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:.4rem">// Skill Matrix</div>
+      <div class="skrow"><div class="sktop"><span class="skn">IT Support & Troubleshooting</span><span class="skp">90%</span></div><div class="sktrack"><div class="skfill" style="--w:90%"></div></div></div>
+      <div class="skrow"><div class="sktop"><span class="skn">Networking & Systems Admin</span><span class="skp">82%</span></div><div class="sktrack"><div class="skfill" style="--w:82%"></div></div></div>
+      <div class="skrow"><div class="sktop"><span class="skn">Economic Analysis</span><span class="skp">88%</span></div><div class="sktrack"><div class="skfill" style="--w:88%"></div></div></div>
+      <div class="skrow"><div class="sktop"><span class="skn">Project Planning & Mgmt</span><span class="skp">85%</span></div><div class="sktrack"><div class="skfill" style="--w:85%"></div></div></div>
+      <div class="skrow"><div class="sktop"><span class="skn">Data Analysis & Reporting</span><span class="skp">80%</span></div><div class="sktrack"><div class="skfill" style="--w:80%"></div></div></div>
+      <div class="skrow"><div class="sktop"><span class="skn">Cybersecurity Fundamentals</span><span class="skp">75%</span></div><div class="sktrack"><div class="skfill" style="--w:75%"></div></div></div>
+      <div class="skrow"><div class="sktop"><span class="skn">Business Strategy</span><span class="skp">83%</span></div><div class="sktrack"><div class="skfill" style="--w:83%"></div></div></div>
+      <div class="skrow"><div class="sktop"><span class="skn">Research & Academic Writing</span><span class="skp">87%</span></div><div class="sktrack"><div class="skfill" style="--w:87%"></div></div></div>
+      <div class="skrow"><div class="sktop"><span class="skn">Technical Documentation</span><span class="skp">78%</span></div><div class="sktrack"><div class="skfill" style="--w:78%"></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── EXPERTISE ── -->
+<section id="expertise" style="background:var(--bg);padding-left:0;padding-right:0;padding-top:5rem;padding-bottom:0">
+  <div style="padding:0 3.5rem">
+    <div class="sh">
+      <span class="snum">02 //</span>
+      <h2 class="stitle">Fields of Expertise</h2>
+      <span class="sline"></span>
+      <span class="ssub">9 Domains</span>
+    </div>
+  </div>
+  <div class="xgrid">
+    <div class="xcard"><span class="xicon">💻</span><div class="xtitle">IT Support & Operations</div><p class="xdesc">End-to-end hardware and software support — OS installation, driver management, PC assembly, system configuration, and user technical assistance for organisations and individuals.</p><div class="xtags"><span class="xtag">Hardware</span><span class="xtag">Windows/Linux</span><span class="xtag">Helpdesk</span></div></div>
+    <div class="xcard"><span class="xicon">🌐</span><div class="xtitle">Networking Fundamentals</div><p class="xdesc">LAN/WAN setup, IP addressing, router and switch configuration, network diagnostics, and small-office infrastructure deployment for reliable connectivity.</p><div class="xtags"><span class="xtag">TCP/IP</span><span class="xtag">LAN/WAN</span><span class="xtag">Infrastructure</span></div></div>
+    <div class="xcard"><span class="xicon">🔒</span><div class="xtitle">Cybersecurity Basics</div><p class="xdesc">Threat identification, secure system practices, password management, data protection, firewall fundamentals, and user security awareness training.</p><div class="xtags"><span class="xtag">Firewalls</span><span class="xtag">Encryption</span><span class="xtag">Risk</span></div></div>
+    <div class="xcard"><span class="xicon">📊</span><div class="xtitle">Economic Analysis</div><p class="xdesc">Micro and macroeconomic research, market analysis, budget forecasting, policy evaluation, and translating economic data into actionable business intelligence.</p><div class="xtags"><span class="xtag">Forecasting</span><span class="xtag">Markets</span><span class="xtag">Policy</span></div></div>
+    <div class="xcard"><span class="xicon">📋</span><div class="xtitle">Project Planning & Mgmt</div><p class="xdesc">Scope definition, WBS creation, Gantt charts, risk registers, stakeholder management, and milestone tracking — delivering projects on time and within budget.</p><div class="xtags"><span class="xtag">Gantt</span><span class="xtag">Risk Mgmt</span><span class="xtag">Agile</span></div></div>
+    <div class="xcard"><span class="xicon">📈</span><div class="xtitle">Data Analysis & Reporting</div><p class="xdesc">Structured data collection, statistical processing, spreadsheet modelling, and producing clear visualisations and written reports for decision-makers.</p><div class="xtags"><span class="xtag">Excel</span><span class="xtag">Statistics</span><span class="xtag">Dashboards</span></div></div>
+    <div class="xcard"><span class="xicon">🏢</span><div class="xtitle">Business Strategy</div><p class="xdesc">Aligning technology investments with business goals, identifying operational inefficiencies, and contributing to long-term strategic planning and SWOT analysis.</p><div class="xtags"><span class="xtag">SWOT</span><span class="xtag">KPIs</span><span class="xtag">Strategy</span></div></div>
+    <div class="xcard"><span class="xicon">🎓</span><div class="xtitle">Academic Research</div><p class="xdesc">Research methodology, literature reviews, hypothesis testing, academic writing, and evidence-based analysis across IT and economics at UDOM.</p><div class="xtags"><span class="xtag">Methods</span><span class="xtag">Writing</span><span class="xtag">UDOM</span></div></div>
+    <div class="xcard"><span class="xicon">🛠️</span><div class="xtitle">Technical Documentation</div><p class="xdesc">Writing IT manuals, SOP guides, system specs, project briefs, and user documentation that enable teams to operate with clarity and consistency.</p><div class="xtags"><span class="xtag">SOPs</span><span class="xtag">Manuals</span><span class="xtag">Specs</span></div></div>
+  </div>
+</section>
+
+<!-- ── PROJECTS ── -->
+<section id="projects" style="background:var(--bg2)">
+  <div class="sh">
+    <span class="snum">03 //</span>
+    <h2 class="stitle">Selected Projects</h2>
+    <span class="sline"></span>
+    <span class="ssub">6 Works</span>
+  </div>
+  <div class="pgrid">
+    <div class="pcard"><div class="pyr">// 2024</div><div class="ptitle">Campus Network Infrastructure Audit</div><p class="pdesc">Full audit of university campus network — identifying security vulnerabilities, recommending hardware upgrades, and delivering a technical remediation report.</p><div class="ptags"><span class="ptag">Networking</span><span class="ptag">IT Audit</span><span class="ptag">Security</span></div></div>
+    <div class="pcard"><div class="pyr">// 2024</div><div class="ptitle">Regional Economic Impact Study</div><p class="pdesc">Research-backed economic impact assessment on digital transformation among SMEs in Shinyanga region — presented findings to faculty and community stakeholders.</p><div class="ptags"><span class="ptag">Economics</span><span class="ptag">Research</span><span class="ptag">Data</span></div></div>
+    <div class="pcard"><div class="pyr">// 2023</div><div class="ptitle">IT Help Desk Workflow System</div><p class="pdesc">Designed and implemented a structured ticketing workflow for an organisation's IT support desk — cutting average issue resolution time by 45% in three months.</p><div class="ptags"><span class="ptag">IT Support</span><span class="ptag">Process</span><span class="ptag">Efficiency</span></div></div>
+    <div class="pcard"><div class="pyr">// 2023</div><div class="ptitle">Community Development Project Plan</div><p class="pdesc">Led a student team producing a full project plan for a Kahama community initiative — scope, stakeholder map, budget, timelines, and risk register.</p><div class="ptags"><span class="ptag">Planning</span><span class="ptag">Risk Mgmt</span><span class="ptag">Leadership</span></div></div>
+    <div class="pcard"><div class="pyr">// 2023</div><div class="ptitle">School PC Setup & Maintenance</div><p class="pdesc">Assembled and configured computer labs for a local Kahama school — OS installation, network connection, productivity software, and basic security hardening.</p><div class="ptags"><span class="ptag">Hardware</span><span class="ptag">OS Setup</span><span class="ptag">Maintenance</span></div></div>
+    <div class="pcard"><div class="pyr">// 2022</div><div class="ptitle">Multi-Year Budget Forecasting Model</div><p class="pdesc">Built a scenario-based budget forecasting model for a non-profit incorporating economic indicators and variance analysis to guide resource allocation decisions.</p><div class="ptags"><span class="ptag">Modelling</span><span class="ptag">Excel</span><span class="ptag">Economics</span></div></div>
+  </div>
+</section>
+
+<!-- ── EXPERIENCE ── -->
+<section id="experience" style="background:var(--bg)">
+  <div class="sh">
+    <span class="snum">04 //</span>
+    <h2 class="stitle">Experience & Education</h2>
+    <span class="sline"></span>
+    <span class="ssub">Timeline</span>
+  </div>
+  <div class="tl">
+    <div class="tli">
+      <div class="tlp">2023 — Present</div>
+      <div class="tlr">BSc — Economics & Information Technology</div>
+      <div class="tlo">University of Dodoma (UDOM) · Dodoma, Tanzania</div>
+      <p class="tld">Pursuing a degree combining economic theory, quantitative research, and information systems. Active in student tech clubs, the economics society, and applied research projects bridging digital innovation with economic development in Tanzania.</p>
+    </div>
+    <div class="tli">
+      <div class="tlp">2023 — Present</div>
+      <div class="tlr">IT Support Specialist (Freelance)</div>
+      <div class="tlo">Independent Practice · Kahama Municipal Council, Shinyanga, Tanzania</div>
+      <p class="tld">Providing IT support to individuals, SMEs, and schools across Shinyanga region — hardware troubleshooting, software setup, network configuration, and ongoing technical maintenance. Delivering practical, cost-effective solutions for resource-constrained environments.</p>
+    </div>
+    <div class="tli">
+      <div class="tlp">2022 — Present</div>
+      <div class="tlr">Project Planner & Coordinator</div>
+      <div class="tlo">Community & Academic Projects · Tanzania</div>
+      <p class="tld">Planning and coordinating academic and community-led initiatives — managing scope definition, stakeholder communication, scheduling, risk assessment, and progress reporting to ensure successful, on-time delivery of projects.</p>
+    </div>
+    <div class="tli">
+      <div class="tlp">2021 — 2022</div>
+      <div class="tlr">Junior Economic Analyst (Volunteer)</div>
+      <div class="tlo">Local Development Initiative · Shinyanga Region, Tanzania</div>
+      <p class="tld">Collected and analysed socioeconomic data to support community development planning. Produced reports on market trends, growth projections, and budget allocation recommendations for local stakeholders and community leaders.</p>
+    </div>
+    <div class="tli" style="padding-bottom:0">
+      <div class="tlp">2020 — 2021</div>
+      <div class="tlr">IT Technician Trainee</div>
+      <div class="tlo">Technical Training Programme · Tanzania</div>
+      <p class="tld">Completed structured training in computer hardware assembly, operating systems (Windows & Linux), basic networking (LAN/WAN), software troubleshooting, and IT documentation best practices — the foundation for all subsequent professional IT work.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ── -->
+<section id="contact" style="background:var(--bg2)">
+  <div class="sh">
+    <span class="snum">05 //</span>
+    <h2 class="stitle">Get In Touch</h2>
+    <span class="sline"></span>
+    <span class="ssub">Contact</span>
+  </div>
+  <div class="clayout">
+    <div class="cleft">
+      <h3>Let's Build<br/><em>Something</em><br/>Together.</h3>
+      <p>Whether you need IT support, economic analysis, project planning, or simply want to connect — I'm open to conversations, collaborations, and opportunities across Tanzania and beyond.</p>
+      <div class="srow">
+        <a class="sbtn" href="#">↗ LinkedIn</a>
+        <a class="sbtn" href="#">↗ GitHub</a>
+        <a class="sbtn" href="#">↓ Download CV</a>
+      </div>
+    </div>
+    <div class="cright">
+      <a class="cc" href="mailto:benedictormwesigwa@gmail.com">
+        <div class="cico">✉</div>
+        <div><div class="cclbl">Email</div><div class="ccval">benedictormwesigwa@gmail.com</div></div>
+      </a>
+      <a class="cc" href="tel:+255760965778">
+        <div class="cico">📞</div>
+        <div><div class="cclbl">Phone / WhatsApp</div><div class="ccval">+255 760 965 778</div></div>
+      </a>
+      <div class="cc" style="cursor:default">
+        <div class="cico">📍</div>
+        <div><div class="cclbl">Address</div><div class="ccval">Kahama Municipal Council, Shinyanga Region, Tanzania</div></div>
+      </div>
+      <div class="cc" style="cursor:default">
+        <div class="cico">🎓</div>
+        <div><div class="cclbl">University</div><div class="ccval">University of Dodoma (UDOM) — Current Student</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="fl">© 2026 Mr. Ben (Benedicto) · Kahama, Shinyanga, Tanzania</div>
+  <div class="fr"><span>IT Professional</span><span>Economist</span><span>Project Planner</span><span>UDOM</span></div>
+</footer>
+
+<script>
+// Custom cursor
+const cur=document.getElementById('cursor'),ring=document.getElementById('cring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
+(function ani(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(ani)})();
+document.querySelectorAll('a,.pcard,.xcard,.mstat,.cc').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.style.width='18px';cur.style.height='18px';ring.style.width='50px';ring.style.height='50px'});
+  el.addEventListener('mouseleave',()=>{cur.style.width='10px';cur.style.height='10px';ring.style.width='32px';ring.style.height='32px'});
+});
+// Scroll reveal
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)'}});
+},{threshold:0.08});
+document.querySelectorAll('.xcard,.pcard,.tli,.cc,.skrow').forEach(el=>{
+  el.style.opacity='0';el.style.transform='translateY(18px)';
+  el.style.transition='opacity 0.5s ease,transform 0.5s ease';
+  obs.observe(el);
+});
+</script>
+</body>
+</html>
